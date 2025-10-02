@@ -27,8 +27,8 @@ header {
 
 header h1 {
   color: #00f0ff;
-  text-shadow: 0 0 15px #00f0ff;
-  font-size: 2.5rem;
+  text-shadow: 0 0 20px #00f0ff;
+  font-size: 2.8rem;
 }
 
 header p {
@@ -45,11 +45,12 @@ nav a {
   color: #00f0ff;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
 }
 
 nav a:hover {
   color: #f05fff;
+  text-shadow: 0 0 8px #f05fff;
 }
 
 /* Sections */
@@ -62,7 +63,8 @@ section {
 
 h2 {
   color: #00f0ff;
-  text-shadow: 0 0 10px #00f0ff;
+  text-shadow: 0 0 12px #00f0ff;
+  font-size: 2.2rem;
 }
 
 ul {
@@ -73,10 +75,16 @@ ul {
 .card {
   background: rgba(255,255,255,0.05);
   border: 1px solid #00f0ff;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 20px auto;
-  max-width: 600px;
+  padding: 25px;
+  border-radius: 15px;
+  margin: 25px auto;
+  max-width: 650px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #00f0ff;
 }
 
 /* Chatbot */
@@ -86,17 +94,18 @@ ul {
   background: rgba(255,255,255,0.05);
   border: 1px solid #00f0ff;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 #chat-log {
-  height: 200px;
+  height: 220px;
   overflow-y: auto;
-  background: black;
+  background: #000;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #00f0ff;
   text-align: left;
+  font-family: monospace;
 }
 
 #chat-log div {
@@ -117,6 +126,7 @@ ul {
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.3s;
 }
 
 #send-btn:hover {
@@ -125,7 +135,7 @@ ul {
 
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 25px;
   border-top: 1px solid #00f0ff;
   color: #888;
   z-index: 1;
