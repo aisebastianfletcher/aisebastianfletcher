@@ -1,79 +1,156 @@
-// script.js
-document.addEventListener('DOMContentLoaded', () => {
-    // Hamburger Menu
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Sebastian Fletcher, AI Engineer and Aspiring AI Scientist">
+    <meta name="keywords" content="AI Engineer, Prompt Engineering, Workflow Automation, Data Scientist">
+    <title>Sebastian Fletcher - AI Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <nav class="menu-bar">
+        <div class="menu-container">
+            <div class="logo">SF</div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#demos">Demos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
-    // 3D Hologram with Three.js
-    const hologram = document.getElementById('hologram');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, hologram.clientWidth / hologram.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(hologram.clientWidth, hologram.clientHeight);
-    hologram.appendChild(renderer.domElement);
+    <section id="hero" class="section hero">
+        <div class="hero-content">
+            <div id="hologram" class="hologram"></div>
+            <h1>Sebastian Fletcher</h1>
+            <h2>AI Engineer</h2>
+            <p class="tagline">Pioneering AI: From Prompts to Impact</p>
+            <a href="#about" class="cta-button">Discover More</a>
+        </div>
+        <canvas id="particles"></canvas>
+    </section>
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00FFFF, wireframe: true });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    <section id="about" class="section about">
+        <div class="about-container">
+            <div class="avatar-wrapper">
+                <div class="avatar"></div>
+            </div>
+            <div class="bio-card">
+                <p>I am a self-taught prompt engineer aspiring to become an AI scientist. My focus lies in prompt design, model alignment, and optimization, with a strong interest in interpretability and safe deployment of AI systems. Through independent study and project work, I have developed skills in structured prompting, workflow automation, Python experimentation, and performance analysis of large language models. Curious and research-driven, I aim to bridge practical application with scientific exploration while contributing to impactful AI projects.</p>
+            </div>
+            <div class="skill-orbit"></div>
+        </div>
+    </section>
 
-    camera.position.z = 5;
+    <section id="skills" class="section skills">
+        <h2>Skills</h2>
+        <div class="skill-carousel">
+            <div class="skill-item" data-skill="AI & Prompting: Prompt design, optimization, context management, workflow automation"></div>
+            <div class="skill-item" data-skill="Programming: Python basic"></div>
+            <div class="skill-item" data-skill="Data Handling"></div>
+            <div class="skill-item" data-skill="Research & Communication"></div>
+            <div class="skill-item" data-skill="Languages: English, Spanish"></div>
+        </div>
+    </section>
 
-    function animate() {
-        requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        renderer.render(scene, camera);
-    }
-    animate();
+    <section id="experience" class="section experience">
+        <h2>Work Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="experience-card">
+                    <h3>AI Engineer - BD PROTOTYPES</h3>
+                    <p>Sep 2024 - present</p>
+                    <ul>
+                        <li>Led end-to-end AI adoption strategy: Reduces work load by 50%+</li>
+                        <li>AI-driven knowledge management systems: Prompt libraries and work flows so non-technical staff to leverage AI tools effectively</li>
+                        <li>Designed and deployed AI-powered dashboards: extract KPIs and trend insights from company data, giving management real-time, actionable decision-making support and laying the foundation for broader AI integration.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-node"></div>
+                <div class="experience-card">
+                    <h3>AI Engineer - Online Freelance (Fiverr/Upwork)</h3>
+                    <p>Jul 2020 - Aug 2024</p>
+                    <ul>
+                        <li>Delivered customized AI prompt solutions for international clients across multiple industries which improved content generation quality, workflow automation and customer engagement.</li>
+                        <li>Collaborated directly with non technical clients to understand business needs and translate them into effective AI use cases including marketing copy, chatbots and data analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // Particles Canvas
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    <section id="education" class="section education">
+        <h2>Education</h2>
+        <div class="education-grid">
+            <div class="edu-badge" data-progress="100">IBM AI Engineering 2025</div>
+            <div class="edu-badge" data-progress="100">Deeplearning.AI courses completed</div>
+            <div class="edu-badge" data-progress="100">ChatGPT prompt engineering developers.</div>
+            <div class="edu-badge" data-progress="100">Building systems with ChatGPT API.</div>
+            <div class="edu-badge" data-progress="100">LLM prompting with gemini.</div>
+            <div class="edu-badge" data-progress="100">Scientific Baccalaureate - Spain | IES IBARS 2012-2014</div>
+        </div>
+    </section>
 
-    const particles = [];
-    for (let i = 0; i < 100; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 2 + 1,
-            color: '#00FFFF',
-            speed: Math.random() * 0.5 + 0.1
-        });
-    }
+    <section id="demos" class="section demos">
+        <h2>Demos</h2>
+        <div class="demo-gallery">
+            <div class="demo-card">
+                <h3>WhatsApp Bot</h3>
+                <p>AI-powered WhatsApp bot using n8n workflows for niche trend analysis, integrating TikTok API, Google Search, and more—reduces research time by 50%+.</p>
+                <a href="https://placeholder-link-to-n8n-demo.com" target="_blank" class="demo-button">View Demo</a>
+            </div>
+            <div class="demo-card">
+                <h3>AI Dashboard Workflow</h3>
+                <p>Real-time KPI extraction using n8n and AI integration.</p>
+                <a href="https://placeholder-link-to-repo.com" target="_blank" class="demo-button">View Demo</a>
+            </div>
+            <div class="demo-card">
+                <h3>Prompt Library Automator</h3>
+                <p>Workflow for non-technical AI access via n8n.</p>
+                <a href="https://placeholder-link-to-repo.com" target="_blank" class="demo-button">View Demo</a>
+            </div>
+            <div class="demo-card">
+                <h3>Freelance Chatbot Builder</h3>
+                <p>Custom n8n flows for client chatbots.</p>
+                <a href="https://placeholder-link-to-repo.com" target="_blank" class="demo-button">View Demo</a>
+            </div>
+        </div>
+    </section>
 
-    function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-            p.y -= p.speed;
-            if (p.y < 0) p.y = canvas.height;
-        });
-        requestAnimationFrame(drawParticles);
-    }
-    drawParticles();
-
-    // Contact Form (placeholder for EmailJS)
-    const form = document.getElementById('contact-form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Message sent! (Placeholder)');
-    });
-
-    // Resize Handling
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        renderer.setSize(hologram.clientWidth, hologram.clientHeight);
-        camera.aspect = hologram.clientWidth / hologram.clientHeight;
-        camera.updateProjectionMatrix();
-    });
-});
+    <section id="contact" class="section contact">
+        <h2>Contact</h2>
+        <form id="contact-form">
+            <input type="text" placeholder="Name" aria-label="Name">
+            <input type="email" placeholder="Email" aria-label="Email">
+            <textarea placeholder="Message" aria-label="Message"></textarea>
+            <button type="submit">Send</button>
+        </form>
+        <div class="social-orbs">
+            <a href="https://github.com/placeholder" class="orb github"></a>
+            <a href="https://linkedin.com/placeholder" class="orb linkedin"></a>
+        </div>
+        <p>Email: aisebastianfletcher@gmail.com</p>
+        <p>Phone: +4407359168434</p>
+        <p>Location: Manchester M41DY</p>
+        <h3>References</h3>
+        <p>Morgan Christian, CEO BD PROTOTYPES</p>
+        <p>Phone: +44 7850547087</p>
+        <p>Email: morgan@bdprototypes.co.uk</p>
+    </section>
+</body>
+</html>
