@@ -1,4 +1,4 @@
-/* General */
+/* styles.css */
 body, html {
   margin: 0;
   padding: 0;
@@ -17,7 +17,6 @@ canvas#bg {
   height: 100%;
 }
 
-/* Header */
 header {
   text-align: center;
   padding: 40px 20px;
@@ -34,6 +33,7 @@ header h1 {
 header p {
   color: #f05fff;
   margin-top: 8px;
+  font-size: 1.2rem;
 }
 
 nav {
@@ -53,7 +53,6 @@ nav a:hover {
   text-shadow: 0 0 5px #f05fff;
 }
 
-/* Sections */
 section {
   padding: 80px 20px;
   position: relative;
@@ -66,18 +65,6 @@ h2 {
   text-shadow: 0 0 8px #00f0ff;
   font-size: 2.2rem;
   margin-bottom: 20px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: left;
-}
-
-li {
-  margin-bottom: 10px;
 }
 
 .card {
@@ -100,7 +87,36 @@ li {
   margin-bottom: 10px;
 }
 
-/* Chatbot */
+ul {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+li {
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+li::before {
+  content: "•";
+  color: #00f0ff;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.demos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 #chat-window {
   max-width: 600px;
   margin: 0 auto;
@@ -158,4 +174,14 @@ footer {
   color: #888;
   z-index: 1;
   position: relative;
+}
+
+@media (max-width: 768px) {
+  nav a {
+    margin: 0 10px;
+    display: block;
+  }
+  .demos-grid {
+    grid-template-columns: 1fr;
+  }
 }
