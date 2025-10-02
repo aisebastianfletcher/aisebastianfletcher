@@ -1,79 +1,102 @@
-// script.js
-document.addEventListener('DOMContentLoaded', () => {
-    // Hamburger Menu
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+// --- Three.js Solar System Background ---
+const canvas = document.getElementById("bg");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // 3D Hologram with Three.js
-    const hologram = document.getElementById('hologram');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, hologram.clientWidth / hologram.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(hologram.clientWidth, hologram.clientHeight);
-    hologram.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+camera.position.z = 40;
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00FFFF, wireframe: true });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+const light = new THREE.PointLight(0xffffff, 2);
+light.position.set(10, 10, 10);
+scene.add(light);
 
-    camera.position.z = 5;
+// Sun
+const sunGeo = new THREE.SphereGeometry(5, 64, 64);
+const sunMat = new THREE.MeshStandardMaterial({ emissive: 0xffaa00, emissiveIntensity: 1 });
+const sun = new THREE.Mesh(sunGeo, sunMat);
+scene.add(sun);
 
-    function animate() {
-        requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        renderer.render(scene, camera);
-    }
-    animate();
+// Planets
+function makePlanet(size, color, distance, speed) {
+  const geo = new THREE.SphereGeometry(size, 32, 32);
+  const mat = new THREE.MeshStandardMaterial({ color: color, emissive: color, emissiveIntensity: 0.2 });
+  const planet = new THREE.Mesh(geo, mat);
+  planet.userData = { angle: Math.random() * Math.PI * 2, distance, speed };
+  scene.add(planet);
+  return planet;
+}
 
-    // Particles Canvas
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+const planets = [
+  makePlanet(1.5, 0x00f0ff, 12, 0.01),
+  makePlanet(1.2, 0xf05fff, 18, 0.008),
+  makePlanet(1.0, 0xffff00, 25, 0.006)
+];
 
-    const particles = [];
-    for (let i = 0; i < 100; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 2 + 1,
-            color: '#00FFFF',
-            speed: Math.random() * 0.5 + 0.1
-        });
-    }
+// Animation
+function animate() {
+  requestAnimationFrame(animate);
+  planets.forEach(p => {
+    p.userData.angle += p.userData.speed;
+    p.position.x = Math.cos(p.userData.angle) * p.userData.distance;
+    p.position.z = Math.sin(p.userData.angle) * p.userData.distance;
+    p.rotation.y += 0.01;
+  });
+  sun.rotation.y += 0.002;
+  renderer.render(scene, camera);
+}
+animate();
 
-    function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-            p.y -= p.speed;
-            if (p.y < 0) p.y = canvas.height;
-        });
-        requestAnimationFrame(drawParticles);
-    }
-    drawParticles();
-
-    // Contact Form (placeholder for EmailJS)
-    const form = document.getElementById('contact-form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Message sent! (Placeholder)');
-    });
-
-    // Resize Handling
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        renderer.setSize(hologram.clientWidth, hologram.clientHeight);
-        camera.aspect = hologram.clientWidth / hologram.clientHeight;
-        camera.updateProjectionMatrix();
-    });
+window.addEventListener("resize", () => {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
 });
+
+// --- Chatbot (OpenAI Integration) ---
+const chatLog = document.getElementById("chat-log");
+const userInput = document.getElementById("user-input");
+const sendBtn = document.getElementById("send-btn");
+
+const apiKey = "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";
+
+async function sendMessage() {
+  const message = userInput.value.trim();
+  if (!message) return;
+
+  const userDiv = document.createElement("div");
+  userDiv.textContent = "You: " + message;
+  chatLog.appendChild(userDiv);
+
+  const aiDiv = document.createElement("div");
+  aiDiv.textContent = "AI: ...";
+  chatLog.appendChild(aiDiv);
+
+  try {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: message }]
+      })
+    });
+
+    const data = await res.json();
+    aiDiv.textContent = "AI: " + (data.choices?.[0]?.message?.content || "No response");
+    chatLog.scrollTop = chatLog.scrollHeight;
+  } catch (err) {
+    aiDiv.textContent = "AI: [Error connecting to API]";
+  }
+
+  userInput.value = "";
+}
+
+sendBtn.addEventListener("click", sendMessage);
+userInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
+
