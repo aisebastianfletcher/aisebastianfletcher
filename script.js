@@ -1,49 +1,104 @@
 // --- Three.js Solar System ---
 const canvas = document.getElementById("bg");
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-camera.position.z = 40;
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+camera.position.set(0, 100, 200);
 
-const light = new THREE.PointLight(0xffffff, 2);
-light.position.set(10, 10, 10);
-scene.add(light);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.screenSpacePanning = false;
+controls.minDistance = 50;
+controls.maxDistance = 5000;
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+scene.add(ambientLight);
+
+const sunLight = new THREE.PointLight(0xffffff, 2.5, 0, 0);
+sunLight.position.set(0, 0, 0);
+scene.add(sunLight);
+
+// Stars background
+const starsTexture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/9/9a/Solarsystemscope_texture_2k_stars.jpg');
+const starsMaterial = new THREE.MeshBasicMaterial({ map: starsTexture, side: THREE.BackSide });
+const starsGeometry = new THREE.SphereGeometry(5000, 64, 64);
+const stars = new THREE.Mesh(starsGeometry, starsMaterial);
+scene.add(stars);
+
+// Planet data (scaled for visualization)
+const planetsData = [
+  { name: 'Mercury', radius: 0.38, distance: 10, texture: 'https://www.solarsystemscope.com/textures/download/2k_mercury.jpg', speed: 0.004 },
+  { name: 'Venus', radius: 0.95, distance: 18, texture: 'https://www.solarsystemscope.com/textures/download/2k_venus_surface.jpg', cloudTexture: 'https://www.solarsystemscope.com/textures/download/2k_venus_atmosphere.jpg', speed: 0.0016 },
+  { name: 'Earth', radius: 1, distance: 25, texture: 'https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg', cloudTexture: 'https://www.solarsystemscope.com/textures/download/2k_earth_clouds.jpg', normalMap: 'https://www.solarsystemscope.com/textures/download/2k_earth_normal_map.tif', speed: 0.001 },
+  { name: 'Mars', radius: 0.53, distance: 38, texture: 'https://www.solarsystemscope.com/textures/download/2k_mars.jpg', speed: 0.0005 },
+  { name: 'Jupiter', radius: 11.2, distance: 130, texture: 'https://www.solarsystemscope.com/textures/download/2k_jupiter.jpg', speed: 0.00008 },
+  { name: 'Saturn', radius: 9.45, distance: 240, texture: 'https://www.solarsystemscope.com/textures/download/2k_saturn.jpg', ringTexture: 'https://www.solarsystemscope.com/textures/download/2k_saturn_ring_alpha.png', speed: 0.00003 },
+  { name: 'Uranus', radius: 4, distance: 480, texture: 'https://www.solarsystemscope.com/textures/download/2k_uranus.jpg', speed: 0.00001 },
+  { name: 'Neptune', radius: 3.88, distance: 750, texture: 'https://www.solarsystemscope.com/textures/download/2k_neptune.jpg', speed: 0.000006 }
+];
 
 // Sun
-const sunGeo = new THREE.SphereGeometry(5, 64, 64);
-const sunMat = new THREE.MeshStandardMaterial({ emissive: 0xffaa00, emissiveIntensity: 1 });
-const sun = new THREE.Mesh(sunGeo, sunMat);
+const sunTexture = new THREE.TextureLoader().load('https://www.solarsystemscope.com/textures/download/2k_sun.jpg');
+const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
+const sunGeometry = new THREE.SphereGeometry(5, 64, 64);
+const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
 
-// Planets
-function makePlanet(size, color, distance, speed) {
-  const geo = new THREE.SphereGeometry(size, 32, 32);
-  const mat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.2 });
-  const planet = new THREE.Mesh(geo, mat);
-  planet.userData = { angle: Math.random() * Math.PI * 2, distance, speed };
+// Create planets
+const planets = [];
+planetsData.forEach(data => {
+  const loader = new THREE.TextureLoader();
+  const material = new THREE.MeshStandardMaterial({ map: loader.load(data.texture) });
+  
+  if (data.normalMap) {
+    material.normalMap = loader.load(data.normalMap);
+  }
+  
+  const geometry = new THREE.SphereGeometry(data.radius, 64, 64);
+  const planet = new THREE.Mesh(geometry, material);
+  planet.userData = { distance: data.distance, speed: data.speed, angle: Math.random() * Math.PI * 2, tilt: Math.random() * 10 - 5 };
   scene.add(planet);
-  return planet;
-}
-
-const planets = [
-  makePlanet(1.5, 0x00f0ff, 12, 0.01),
-  makePlanet(1.2, 0xf05fff, 18, 0.008),
-  makePlanet(1.0, 0xffff00, 25, 0.006)
-];
+  planets.push(planet);
+  
+  // Clouds
+  if (data.cloudTexture) {
+    const cloudMaterial = new THREE.MeshStandardMaterial({ map: loader.load(data.cloudTexture), transparent: true, opacity: 0.8 });
+    const cloudGeometry = new THREE.SphereGeometry(data.radius * 1.01, 64, 64);
+    const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    planet.add(clouds);
+  }
+  
+  // Rings for Saturn
+  if (data.ringTexture) {
+    const ringMaterial = new THREE.MeshStandardMaterial({ map: loader.load(data.ringTexture), side: THREE.DoubleSide, transparent: true });
+    const ringGeometry = new THREE.RingGeometry(data.radius * 1.2, data.radius * 2, 64);
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    ring.rotation.x = Math.PI / 2;
+    planet.add(ring);
+  }
+});
 
 // Animate
 function animate() {
   requestAnimationFrame(animate);
-  planets.forEach(p => {
-    p.userData.angle += p.userData.speed;
+  controls.update();
+  
+  sun.rotation.y += 0.001;
+  
+  planets.forEach((p, i) => {
+    p.userData.angle += planetsData[i].speed;
     p.position.x = Math.cos(p.userData.angle) * p.userData.distance;
     p.position.z = Math.sin(p.userData.angle) * p.userData.distance;
-    p.rotation.y += 0.01;
+    p.rotation.y += 0.005;
+    p.rotation.x = p.userData.tilt * Math.PI / 180;
+    
+    if (p.children[0]) p.children[0].rotation.y += 0.001; // Clouds
   });
-  sun.rotation.y += 0.002;
+  
   renderer.render(scene, camera);
 }
 animate();
@@ -92,7 +147,7 @@ async function sendMessage() {
   userInput.value = "";
 
   try {
-    const res = await fetch("/api/chat", {
+    const res = await fetch('https://your-vercel-app.vercel.app/api/chat', {  // Replace with your actual Vercel URL
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message })
