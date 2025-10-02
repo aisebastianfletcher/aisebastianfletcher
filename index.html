@@ -1,252 +1,93 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sebastian Fletcher — AI Scientist & Data Research</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sebastian Fletcher – AI Scientist Portfolio</title>
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Three.js -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 </head>
 <body>
-  <!-- 3D background canvas -->
-  <canvas id="bg-canvas" class="bg-canvas"></canvas>
+  <!-- Background Canvas -->
+  <canvas id="bg"></canvas>
 
-  <!-- Main content container (keeps content above the canvas) -->
-  <div id="page" class="page">
-    <header class="nav">
-      <div class="brand">
-        <div class="logo-dot"></div>
-        <div class="brand-text">Sebastian Fletcher</div>
-      </div>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#experience">Experience</a>
-        <a href="#publications">Publications</a>
-        <a href="#demos">Demos</a>
-        <a href="#contact">Contact</a>
-        <a href="#chatbot">AI Chat</a>
-      </nav>
-    </header>
+  <!-- Content -->
+  <header>
+    <h1>Sebastian Fletcher</h1>
+    <p>AI Scientist & Data Research Professional</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#demos">Demos</a>
+      <a href="#contact">Contact</a>
+      <a href="#chatbot">AI Chat</a>
+    </nav>
+  </header>
 
-    <!-- HERO -->
-    <section id="hero" class="hero container">
-      <div class="hero-left">
-        <h1 class="neon-title">Sebastian Fletcher</h1>
-        <p class="subtitle">AI Scientist & Data Research Professional — Prompt engineering · Model alignment · Production ML</p>
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      Self-taught AI scientist specializing in prompt engineering, model
+      alignment, and applied research. Experienced in building production-ready
+      AI systems and data pipelines.
+    </p>
+  </section>
 
-        <div class="cta-row">
-          <a class="btn primary" href="#demos">View Demos</a>
-          <a class="btn outline" href="#contact">Contact</a>
-        </div>
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul>
+      <li>Machine Learning & Deep Learning</li>
+      <li>Python, PyTorch, TensorFlow</li>
+      <li>Data Engineering & APIs</li>
+      <li>Prompt Design & LLM Alignment</li>
+    </ul>
+  </section>
 
-        <ul class="quick-info">
-          <li><strong>Email:</strong> <a href="mailto:aisebastianfletcher@gmail.com">aisebastianfletcher@gmail.com</a></li>
-          <li><strong>Phone:</strong> +44 7359 168 434</li>
-          <li><strong>Location:</strong> Manchester, UK</li>
-          <li><strong>GitHub:</strong> <a href="https://github.com/aisebastianfletcher" target="_blank">github.com/aisebastianfletcher</a></li>
-        </ul>
-      </div>
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="card">
+      <h3>AI Engineer – BD PROTOTYPES</h3>
+      <p>2024 – Present</p>
+      <ul>
+        <li>Built end-to-end AI adoption program reducing workload by 50%.</li>
+        <li>Developed AI dashboards and KPI extractors for management.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Freelance AI Engineer</h3>
+      <p>2020 – 2024</p>
+      <ul>
+        <li>Delivered prompt libraries and AI systems for international clients.</li>
+        <li>Specialized in safe and interpretable model deployment.</li>
+      </ul>
+    </div>
+  </section>
 
-      <div class="hero-right">
-        <div class="card summary-card glass">
-          <h3>Professional summary</h3>
-          <p>
-            Self-taught prompt engineer and AI engineer with a strong research focus.
-            Experience building prompt libraries, AI-driven knowledge-management systems,
-            production dashboards, and delivering tailored AI solutions for international clients.
-            Interested in interpretability, alignment and safe deployment of LLM-based systems.
-          </p>
-          <div class="badges">
-            <span>Prompt Design</span>
-            <span>Model Alignment</span>
-            <span>Workflow Automation</span>
-          </div>
-        </div>
-      </div>
-    </section>
+  <section id="demos">
+    <h2>Demos</h2>
+    <p>Interactive AI demos coming soon...</p>
+  </section>
 
-    <!-- ABOUT -->
-    <section id="about" class="container">
-      <h2>About</h2>
-      <div class="grid-2">
-        <div class="card glass">
-          <h4>Core focus</h4>
-          <p>
-            Turning research-grade ideas into robust, maintainable systems. Primary interests:
-            performance analysis of large language models, interpretability, prompt engineering,
-            and productionizing ML workflows for non-technical teams.
-          </p>
-        </div>
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:aisebastianfletcher@gmail.com">aisebastianfletcher@gmail.com</a></p>
+    <p>GitHub: <a href="https://github.com/aisebastianfletcher" target="_blank">github.com/aisebastianfletcher</a></p>
+  </section>
 
-        <div class="card glass">
-          <h4>Education & Certificates</h4>
-          <ul class="compact-list">
-            <li>Scientific Baccalaureate — IES IBARS, Spain (2012–2014)</li>
-            <li>IBM AI Engineering (2025) — coursework & projects</li>
-            <li>DeepLearning.AI — specializations completed</li>
-            <li>Coursera: AI Engineer Specialization — <a href="https://www.coursera.org/specializations/ai-engineer" target="_blank">link</a></li>
-          </ul>
-        </div>
-      </div>
-    </section>
+  <section id="chatbot">
+    <h2>AI Assistant</h2>
+    <div id="chat-window">
+      <div id="chat-log"></div>
+      <input type="text" id="user-input" placeholder="Ask me anything..." />
+      <button id="send-btn">Send</button>
+    </div>
+  </section>
 
-    <!-- SKILLS -->
-    <section id="skills" class="container">
-      <h2>Skills</h2>
-      <div class="skill-cloud glass">
-        <span>Prompt Engineering</span>
-        <span>LLM Alignment</span>
-        <span>Python</span>
-        <span>PyTorch</span>
-        <span>TensorFlow</span>
-        <span>Data Engineering</span>
-        <span>API Design</span>
-        <span>Production Dashboards</span>
-        <span>Research</span>
-        <span>NLP</span>
-        <span>Model Evaluation</span>
-      </div>
+  <footer>
+    <p>© 2025 Sebastian Fletcher. All rights reserved.</p>
+  </footer>
 
-      <div class="two-up">
-        <div class="card glass">
-          <h4>Languages</h4>
-          <p>English (native), Spanish (conversational)</p>
-        </div>
-        <div class="card glass">
-          <h4>Tooling & Frameworks</h4>
-          <p>Python, SQL, Git, Docker, FastAPI, Hugging Face, OpenAI API, Gemini, MLflow</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section id="experience" class="container">
-      <h2>Experience</h2>
-
-      <article class="exp-row glass">
-        <div class="exp-left">
-          <h3>AI Engineer — BD PROTOTYPES</h3>
-          <p class="muted">Sep 2024 – Present</p>
-        </div>
-        <div class="exp-right">
-          <ul>
-            <li>Led an end-to-end AI adoption programme reducing workload by 50%+ through automation.</li>
-            <li>Built prompt libraries and workflows so non-technical staff could leverage AI safely.</li>
-            <li>Designed and deployed AI-driven dashboards to extract KPIs and real-time insights for management.</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="exp-row glass">
-        <div class="exp-left">
-          <h3>AI Engineer (Freelance) — Fiverr / Upwork</h3>
-          <p class="muted">Jul 2020 – Aug 2024</p>
-        </div>
-        <div class="exp-right">
-          <ul>
-            <li>Delivered tailored prompt solutions improving content generation & workflow automation.</li>
-            <li>Collaborated with non-technical clients to translate business needs into AI use-cases and chatbots.</li>
-          </ul>
-        </div>
-      </article>
-    </section>
-
-    <!-- PUBLICATIONS (placeholder) -->
-    <section id="publications" class="container">
-      <h2>Publications & Research</h2>
-      <p class="muted">Selected project summaries and links.</p>
-      <div class="pub-grid">
-        <div class="card glass pub-card">
-          <h4>Prompt Libraries for Enterprise</h4>
-          <p>Design & governance framework for safe prompt reuse in internal tools.</p>
-          <a class="link" href="#" target="_blank">View project</a>
-        </div>
-
-        <div class="card glass pub-card">
-          <h4>LLM Performance Analysis</h4>
-          <p>Benchmarked large models on domain-specific tasks and produced reproducible evaluation pipelines.</p>
-          <a class="link" href="#" target="_blank">View project</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- DEMOS -->
-    <section id="demos" class="container">
-      <h2>Demos</h2>
-      <p class="muted">Interactive demos and live notebooks. Click a card to launch a demo (placeholders below).</p>
-
-      <div class="demo-grid">
-        <div class="demo-card glass">
-          <h4>Interactive Chat Demo</h4>
-          <p>Live conversational agent integrated with domain prompts & guardrails.</p>
-          <button class="btn small" data-demo="chat">Try Live</button>
-        </div>
-
-        <div class="demo-card glass">
-          <h4>Model Comparison Dashboard</h4>
-          <p>Compare model outputs, metrics and explainability traces.</p>
-          <a class="btn small outline" href="#" target="_blank">Open</a>
-        </div>
-
-        <div class="demo-card glass">
-          <h4>Prompt Playground</h4>
-          <p>Tweak prompt templates and evaluate on sample datasets.</p>
-          <a class="btn small outline" href="#" target="_blank">Open</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="container">
-      <h2>Contact</h2>
-      <div class="card glass contact-card">
-        <div class="contact-left">
-          <p><strong>Email:</strong> <a href="mailto:aisebastianfletcher@gmail.com">aisebastianfletcher@gmail.com</a></p>
-          <p><strong>Phone:</strong> +44 7359 168 434</p>
-          <p><strong>Representative / CEO:</strong> Morgan Christian — BD PROTOTYPES — morgan@bdprototypes.co.uk</p>
-        </div>
-        <form id="contact-form" class="contact-form">
-          <input name="name" placeholder="Your name" required />
-          <input name="email" placeholder="Your email" required />
-          <textarea name="message" placeholder="Brief message" rows="5" required></textarea>
-          <div class="form-row">
-            <button class="btn primary" type="submit">Send message</button>
-            <button class="btn outline" type="reset">Reset</button>
-          </div>
-          <p class="muted small">Messages are sent client-side to the example contact handler (config required on server).</p>
-        </form>
-      </div>
-    </section>
-
-    <!-- CHATBOT -->
-    <section id="chatbot" class="container">
-      <h2>AI Assistant</h2>
-      <div class="chat-wrap glass">
-        <div id="chat-log" class="chat-log" aria-live="polite"></div>
-        <div class="chat-controls">
-          <input id="chat-input" placeholder="Ask about my research, demos or CV..." />
-          <button id="chat-send" class="btn primary">Send</button>
-        </div>
-        <div class="chat-footer muted small">Tip: Use concise questions for best results.</div>
-      </div>
-      <div class="note muted small">
-        <strong>Security:</strong> The demo script contains a variable for an OpenAI API key. Use a server-side proxy for production — do not commit secret keys to a public repo.
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div>© Sebastian Fletcher • Built with focus on research, reliability & design</div>
-    </footer>
-  </div>
-
-  <script src="script.js" type="module"></script>
+  <script src="script.js"></script>
 </body>
 </html>
