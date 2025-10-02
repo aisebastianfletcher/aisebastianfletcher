@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- 🌟 Header -->
+  <header class="bg-white shadow-sm fixed top-0 w-full z-50">
+    <nav class="max-w-5xl mx-auto flex justify-between items-center py-4 px-4">
+      <h1 class="text-2xl font-bold">YourName<span class="text-green-500">.</span></h1>
+      <div class="space-x-6">
+        <a href="#about" class="hover:text-green-500">About</a>
+        <a href="#projects" class="hover:text-green-500">Projects</a>
+        <a href="#whatsapp-bot" class="hover:text-green-500">WhatsApp Bot</a>
+        <a href="#contact" class="hover:text-green-500">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 🏠 Hero Section -->
+  <section class="pt-32 pb-20 text-center bg-gradient-to-b from-green-50 to-white">
+    <h2 class="text-4xl font-extrabold mb-4">Hi, I'm <span class="text-green-600">Your Name</span></h2>
+    <p class="text-lg text-gray-600 mb-6">A passionate developer building modern, intelligent web solutions.</p>
+    <a href="#projects" class="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-lg">View My Work</a>
+  </section>
+
+  <!-- 👨‍💻 About -->
+  <section id="about" class="max-w-4xl mx-auto py-20 px-4 text-center">
+    <h3 class="text-3xl font-bold mb-6">About Me</h3>
+    <p class="text-gray-600 leading-relaxed">
+      I'm a creative developer specializing in automation, AI chatbots, and seamless digital experiences.
+      I love turning ideas into interactive realities — from portfolio sites to intelligent workflows.
+    </p>
+  </section>
+
+  <!-- 🚀 Projects -->
+  <section id="projects" class="bg-white py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h3 class="text-3xl font-bold text-center mb-10">Projects</h3>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Project 1 -->
+        <div class="bg-gray-100 rounded-2xl p-6 shadow hover:shadow-lg transition">
+          <h4 class="font-semibold text-xl mb-2">AI Trading Assistant</h4>
+          <p class="text-gray-600 mb-4">Automates trade setups and volatility scans across sessions.</p>
+          <a href="#" class="text-green-600 font-semibold">View Project →</a>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="bg-gray-100 rounded-2xl p-6 shadow hover:shadow-lg transition">
+          <h4 class="font-semibold text-xl mb-2">Automation Workflow</h4>
+          <p class="text-gray-600 mb-4">Smart business automation built with n8n and custom APIs.</p>
+          <a href="#" class="text-green-600 font-semibold">View Project →</a>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="bg-gray-100 rounded-2xl p-6 shadow hover:shadow-lg transition">
+          <h4 class="font-semibold text-xl mb-2">Portfolio Generator</h4>
+          <p class="text-gray-600 mb-4">A no-code template to create interactive developer portfolios.</p>
+          <a href="#" class="text-green-600 font-semibold">View Project →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 💬 WhatsApp Bot Demo -->
+  <section id="whatsapp-bot" class="py-20 bg-green-50 text-center">
+    <h3 class="text-3xl font-bold mb-4">💬 WhatsApp Bot Demo</h3>
+    <p class="max-w-xl mx-auto text-gray-600 mb-6">
+      Try my WhatsApp chatbot — built with n8n + OpenAI. Enter your number below, and I’ll message you on WhatsApp!
+    </p>
+
+    <form id="whatsappForm" class="max-w-md mx-auto">
+      <input type="text" id="phone" name="phone"
+        placeholder="Enter your WhatsApp number (e.g. +441234567890)"
+        class="w-full border rounded-lg px-4 py-2 mb-4 text-center" required>
+
+      <button type="submit"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-lg">
+        Send Me a Message
+      </button>
+    </form>
+
+    <p id="statusMsg" class="mt-4 text-gray-500"></p>
+  </section>
+
+  <!-- 📬 Contact -->
+  <section id="contact" class="py-20 px-4 text-center">
+    <h3 class="text-3xl font-bold mb-6">Contact Me</h3>
+    <p class="text-gray-600 mb-4">Got a project, collaboration, or idea? Let's connect!</p>
+    <a href="mailto:youremail@example.com" class="text-green-600 font-semibold text-lg hover:underline">youremail@example.com</a>
+  </section>
+
+  <!-- ⚙️ WhatsApp Form Script -->
+  <script>
+    document.getElementById("whatsappForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const phone = document.getElementById("phone").value.trim();
+      const statusMsg = document.getElementById("statusMsg");
+      statusMsg.innerText = "Sending message...";
+
+      const res = await fetch("https://YOUR_N8N_DOMAIN/webhook/sendwhatsapp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone })
+      });
+
+      if (res.ok) {
+        statusMsg.innerText = "✅ Message sent! Check your WhatsApp.";
+      } else {
+        statusMsg.innerText = "❌ Something went wrong.";
+      }
+    });
+  </script>
+
+  <!-- 🦶 Footer -->
+  <footer class="bg-white border-t py-6 text-center text-gray-500 text-sm">
+    © 2025 Your Name. Built with ❤️ using Tailwind & n8n.
+  </footer>
+</body>
+</html>
+
