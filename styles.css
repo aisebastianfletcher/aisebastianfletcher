@@ -27,7 +27,7 @@ header {
 
 header h1 {
   color: #00f0ff;
-  text-shadow: 0 0 20px #00f0ff;
+  text-shadow: 0 0 10px #00f0ff;
   font-size: 2.8rem;
 }
 
@@ -50,12 +50,12 @@ nav a {
 
 nav a:hover {
   color: #f05fff;
-  text-shadow: 0 0 8px #f05fff;
+  text-shadow: 0 0 5px #f05fff;
 }
 
 /* Sections */
 section {
-  padding: 100px 20px;
+  padding: 80px 20px;
   position: relative;
   z-index: 1;
   text-align: center;
@@ -63,60 +63,77 @@ section {
 
 h2 {
   color: #00f0ff;
-  text-shadow: 0 0 12px #00f0ff;
+  text-shadow: 0 0 8px #00f0ff;
   font-size: 2.2rem;
+  margin-bottom: 20px;
 }
 
 ul {
   list-style: none;
   padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+li {
+  margin-bottom: 10px;
 }
 
 .card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid #00f0ff;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(0,240,255,0.3);
   padding: 25px;
-  border-radius: 15px;
+  border-radius: 10px;
   margin: 25px auto;
   max-width: 650px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 15px #00f0ff;
+  transform: translateY(-3px);
+  box-shadow: 0 0 10px rgba(0,240,255,0.5);
+}
+
+.card h3 {
+  color: #f05fff;
+  margin-bottom: 10px;
 }
 
 /* Chatbot */
 #chat-window {
   max-width: 600px;
   margin: 0 auto;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid #00f0ff;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(0,240,255,0.3);
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 #chat-log {
   height: 220px;
   overflow-y: auto;
-  background: #000;
+  background: rgba(0,0,0,0.5);
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #00f0ff;
+  border: 1px solid rgba(0,240,255,0.3);
   text-align: left;
-  font-family: monospace;
+  border-radius: 5px;
 }
 
 #chat-log div {
   margin: 5px 0;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 #user-input {
   width: 70%;
   padding: 10px;
-  border: none;
+  border: 1px solid rgba(0,240,255,0.3);
   border-radius: 5px;
+  background: rgba(255,255,255,0.05);
+  color: #e0e0e0;
 }
 
 #send-btn {
@@ -126,7 +143,8 @@ ul {
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  transition: 0.3s;
+  transition: 0.3s ease;
+  color: #05050a;
 }
 
 #send-btn:hover {
@@ -136,7 +154,7 @@ ul {
 footer {
   text-align: center;
   padding: 25px;
-  border-top: 1px solid #00f0ff;
+  border-top: 1px solid rgba(0,240,255,0.3);
   color: #888;
   z-index: 1;
   position: relative;
