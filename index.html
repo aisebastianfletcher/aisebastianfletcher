@@ -1,149 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Sebastian Fletcher, AI Engineer and Aspiring AI Scientist">
-    <meta name="keywords" content="AI Engineer, Prompt Engineering, Workflow Automation, Data Scientist">
-    <title>Sebastian Fletcher - AI Engineer</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sebastian Fletcher – AI Scientist Portfolio</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <div class="profile">
-                <img src="assets/profile.jpg" alt="Sebastian Fletcher" class="profile-img">
-                <h1>Sebastian Fletcher</h1>
-                <h2>AI Engineer</h2>
-            </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#demos">Demos</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <!-- 3D Solar System Background -->
+  <canvas id="bg"></canvas>
 
-    <main>
-        <section id="about" class="section">
-            <div class="container">
-                <h3>About Me</h3>
-                <p>I am a self-taught prompt engineer aspiring to become an AI scientist. My focus lies in prompt design, model alignment, and optimization, with a strong interest in interpretability and safe deployment of AI systems. Through independent study and project work, I have developed skills in structured prompting, workflow automation, Python experimentation, and performance analysis of large language models. Curious and research-driven, I aim to bridge practical application with scientific exploration while contributing to impactful AI projects.</p>
-            </div>
-        </section>
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#demos">Demos</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#chatbot">AI Chat</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        <section id="skills" class="section">
-            <div class="container">
-                <h3>Skills</h3>
-                <ul class="skills-list">
-                    <li>AI & Prompting: Prompt design, optimization, context management, workflow automation</li>
-                    <li>Programming: Python basic</li>
-                    <li>Data Handling</li>
-                    <li>Research & Communication</li>
-                    <li>Languages: English, Spanish</li>
-                </ul>
-            </div>
-        </section>
+  <!-- Hero Section -->
+  <section id="hero">
+    <h1>Sebastian Fletcher</h1>
+    <p>AI Scientist & Data Research Professional</p>
+  </section>
 
-        <section id="experience" class="section">
-            <div class="container">
-                <h3>Work Experience</h3>
-                <div class="experience-item">
-                    <h4>AI Engineer - BD PROTOTYPES</h4>
-                    <p class="date">Sep 2024 - present</p>
-                    <ul>
-                        <li>Led end-to-end AI adoption strategy: Reduces work load by 50%+</li>
-                        <li>AI-driven knowledge management systems: Prompt libraries and work flows so non-technical staff to leverage AI tools effectively</li>
-                        <li>Designed and deployed AI-powered dashboards: extract KPIs and trend insights from company data, giving management real-time, actionable decision-making support and laying the foundation for broader AI integration.</li>
-                    </ul>
-                </div>
-                <div class="experience-item">
-                    <h4>AI Engineer - Online Freelance (Fiverr/Upwork)</h4>
-                    <p class="date">Jul 2020 - Aug 2024</p>
-                    <ul>
-                        <li>Delivered customized AI prompt solutions for international clients across multiple industries which improved content generation quality, workflow automation and customer engagement.</li>
-                        <li>Collaborated directly with non technical clients to understand business needs and translate them into effective AI use cases including marketing copy, chatbots and data analysis</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      Passionate AI scientist and data research professional with expertise in
+      machine learning, deep learning, and large-scale data systems. Skilled at
+      turning research into practical, impactful solutions.
+    </p>
+  </section>
 
-        <section id="education" class="section">
-            <div class="container">
-                <h3>Education</h3>
-                <ul class="education-list">
-                    <li>IBM AI Engineering 2025</li>
-                    <li>Deeplearning.AI courses completed</li>
-                    <li>ChatGPT prompt engineering developers</li>
-                    <li>Building systems with ChatGPT API</li>
-                    <li>LLM prompting with gemini</li>
-                    <li>Scientific Baccalaureate - Spain | IES IBARS 2012-2014</li>
-                </ul>
-            </div>
-        </section>
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul>
+      <li>Machine Learning & Deep Learning</li>
+      <li>Data Science & Research</li>
+      <li>Python, R, SQL</li>
+      <li>TensorFlow, PyTorch</li>
+      <li>Big Data Processing</li>
+      <li>AI Systems Design</li>
+    </ul>
+  </section>
 
-        <section id="demos" class="section">
-            <div class="container">
-                <h3>Demos</h3>
-                <div class="demos-grid">
-                    <div class="demo-card">
-                        <h4>WhatsApp Bot</h4>
-                        <p>AI-powered WhatsApp bot using n8n workflows for niche trend analysis, integrating TikTok API, Google Search, and more—reduces research time by 50%+.</p>
-                        <a href="https://placeholder-link-to-n8n-demo.com" target="_blank" class="btn">View Demo</a>
-                    </div>
-                    <div class="demo-card">
-                        <h4>AI Dashboard Workflow</h4>
-                        <p>Real-time KPI extraction using n8n and AI integration.</p>
-                        <a href="https://placeholder-link-to-repo.com" target="_blank" class="btn">View Demo</a>
-                    </div>
-                    <div class="demo-card">
-                        <h4>Prompt Library Automator</h4>
-                        <p>Workflow for non-technical AI access via n8n.</p>
-                        <a href="https://placeholder-link-to-repo.com" target="_blank" class="btn">View Demo</a>
-                    </div>
-                    <div class="demo-card">
-                        <h4>Freelance Chatbot Builder</h4>
-                        <p>Custom n8n flows for client chatbots.</p>
-                        <a href="https://placeholder-link-to-repo.com" target="_blank" class="btn">View Demo</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="section">
-            <div class="container">
-                <h3>Contact</h3>
-                <p>Email: aisebastianfletcher@gmail.com</p>
-                <p>Phone: +44 07359168434</p>
-                <p>Location: Manchester M41DY</p>
-                <h4>References</h4>
-                <p>Morgan Christian, CEO BD PROTOTYPES</p>
-                <p>Phone: +44 7850547087</p>
-                <p>Email: morgan@bdprototypes.co.uk</p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Oracle Bot Widget -->
-    <div id="chat-toggle" class="chat-toggle">💬 Oracle Bot</div>
-    <div id="chat-modal" class="chat-modal">
-        <div class="chat-header">
-            <h3>Oracle Bot</h3>
-            <button id="close-chat">&times;</button>
-        </div>
-        <div id="chat-messages" class="chat-messages">
-            <div class="message bot">Hello! I'm Oracle Bot, powered by AI. Ask me any question about Sebastian's work or anything else.</div>
-        </div>
-        <div class="chat-input-wrapper">
-            <input type="text" id="chat-input" placeholder="Ask a question..." aria-label="Chat input">
-            <button id="send-message">Send</button>
-        </div>
+  <!-- Experience -->
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="exp-card">
+      <h3>AI Scientist – [Company Name]</h3>
+      <p>Researched and developed scalable AI models to solve real-world data problems.</p>
     </div>
+    <div class="exp-card">
+      <h3>Data Research Professional – [Institution Name]</h3>
+      <p>Led data-driven projects, producing technical insights and peer-reviewed publications.</p>
+    </div>
+  </section>
+
+  <!-- Demos -->
+  <section id="demos">
+    <h2>Demos</h2>
+    <p>Interactive AI and data research demos will be showcased here.</p>
+    <div class="demo-gallery">
+      <div class="demo-item">Demo 1: NLP Research</div>
+      <div class="demo-item">Demo 2: Predictive Analytics</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: sebastian.fletcher@example.com</p>
+    <p>GitHub: <a href="https://github.com/aisebastianfletcher">github.com/aisebastianfletcher</a></p>
+    <p>LinkedIn: <a href="#">LinkedIn Profile</a></p>
+  </section>
+
+  <!-- Chatbot -->
+  <section id="chatbot">
+    <h2>AI Assistant</h2>
+    <div id="chat-window">
+      <div id="chat-log"></div>
+      <input type="text" id="user-input" placeholder="Ask me anything..." />
+      <button id="send-btn">Send</button>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
