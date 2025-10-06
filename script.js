@@ -3,8 +3,8 @@ console.log('Script starting...');
 
 let renderer, scene, camera, controls, sun, planets = [], stars, foregroundParticles;
 const canvas = document.getElementById("bg");
-// Replace with your Vercel deployment URL after deploying
-const VERCEL_API_URL = 'YOUR_VERCEL_URL'; // e.g., https://your-project.vercel.app
+// Updated with your Vercel URL
+const VERCEL_API_URL = 'https://aisebastianfletcher-o7zx.vercel.app';
 
 function initSolarSystem() {
   console.log('Solar init...');
@@ -76,7 +76,6 @@ function initSolarSystem() {
     }
   });
 
-  // Add subtle foreground 3D elements: floating particles
   const particleGeometry = new THREE.BufferGeometry();
   const particleVertices = [];
   const particleColors = [];
@@ -89,7 +88,7 @@ function initSolarSystem() {
     const z = Math.random() * 50 - 100;
     particleVertices.push(x, y, z);
 
-    color.setHSL(Math.random(), 0.5, 0.7); // Colors matching #00f0ff, #f05fff scheme
+    color.setHSL(Math.random(), 0.5, 0.7);
     particleColors.push(color.r, color.g, color.b);
     particleSizes.push(Math.random() * 2 + 0.5);
   }
@@ -154,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSolarSystem();
   animate();
 
-  // Sebastian's Assistant
   const chatLog = document.getElementById("chat-log");
   const userInput = document.getElementById("user-input");
   const sendBtn = document.getElementById("send-btn");
@@ -165,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const interval = setInterval(() => {
       if (i < text.length) {
         element.innerHTML += text[i++];
-        chatLog.scrollTop = chatLog.scrollHeight;
+        if (chatLog) chatLog.scrollTop = chatLog.scrollHeight;
       } else {
         clearInterval(interval);
       }
@@ -178,13 +176,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const userDiv = document.createElement("div");
     userDiv.innerHTML = `<strong style="color: #00f0ff;">You:</strong> ${message}`;
-    chatLog.appendChild(userDiv);
-    chatLog.scrollTop = chatLog.scrollHeight;
+    if (chatLog) {
+      chatLog.appendChild(userDiv);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
 
     const aiDiv = document.createElement("div");
     aiDiv.innerHTML = '<strong style="color: #f05fff;">Sebastian\'s Assistant:</strong> Thinking...';
-    chatLog.appendChild(aiDiv);
-    chatLog.scrollTop = chatLog.scrollHeight;
+    if (chatLog) {
+      chatLog.appendChild(aiDiv);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
 
     userInput.value = "";
 
@@ -195,16 +197,20 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ message })
       });
 
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
       const data = await response.json();
       if (!data.reply) throw new Error('No reply in response');
 
-      aiDiv.innerHTML = '';
-      typeText(aiDiv, `<strong style="color: #f05fff;">Sebastian's Assistant:</strong> ${data.reply}`);
+      if (aiDiv) {
+        aiDiv.innerHTML = '';
+        typeText(aiDiv, `<strong style="color: #f05fff;">Sebastian's Assistant:</strong> ${data.reply}`);
+      }
     } catch (error) {
-      aiDiv.innerHTML = '';
-      typeText(aiDiv, `<strong style="color: #f05fff;">Sebastian's Assistant:</strong> Error: ${error.message}. Check console for details.`);
+      if (aiDiv) {
+        aiDiv.innerHTML = '';
+        typeText(aiDiv, `<strong style="color: #f05fff;">Sebastian's Assistant:</strong> Error: ${error.message}. Check console for details.`);
+      }
       console.error('Chat error:', error);
     }
   }
@@ -218,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
     chatLog.appendChild(welcome);
   }
 
-  // Prompt Library Automator
   const promptTask = document.getElementById("prompt-task");
   const promptModel = document.getElementById("prompt-model");
   const generatePromptBtn = document.getElementById("generate-prompt");
@@ -228,11 +233,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const task = promptTask.value.trim();
     const model = promptModel.value;
     if (!task) {
-      promptOutput.innerHTML = '<strong style="color: #f05fff;">Error:</strong> Please enter a task.';
+      if (promptOutput) promptOutput.innerHTML = '<strong style="color: #f05fff;">Error:</strong> Please enter a task.';
       return;
     }
 
-    promptOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
+    if (promptOutput) promptOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
     try {
       const response = await fetch(`${VERCEL_API_URL}/api/prompt-library`, {
         method: 'POST',
@@ -240,19 +245,19 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ task, model })
       });
 
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
       const data = await response.json();
       if (!data.prompt) throw new Error('No prompt in response');
 
-      promptOutput.innerHTML = `
+      if (promptOutput) promptOutput.innerHTML = `
         <strong style="color: #f05fff;">Generated Prompt:</strong>
         <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; margin-top: 10px; white-space: pre-wrap;">
           ${data.prompt}
         </div>
       `;
     } catch (error) {
-      promptOutput.innerHTML = `<strong style="color: #f05fff;">Error:</strong> ${error.message}`;
+      if (promptOutput) promptOutput.innerHTML = `<strong style="color: #f05fff;">Error:</strong> ${error.message}`;
       console.error('Prompt error:', error);
     }
   }
@@ -260,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (generatePromptBtn) generatePromptBtn.addEventListener('click', generatePrompt);
   if (promptTask) promptTask.addEventListener('keypress', e => { if (e.key === 'Enter') generatePrompt(); });
 
-  // Freelance Chatbot Builder
   const chatbotGreeting = document.getElementById("chatbot-greeting");
   const chatbotTone = document.getElementById("chatbot-tone");
   const chatbotKeywords = document.getElementById("chatbot-keywords");
@@ -275,11 +279,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = chatbotInput.value.trim();
 
     if (!input) {
-      chatbotOutput.innerHTML = '<strong style="color: #f05fff;">Error:</strong> Please enter a test message.';
+      if (chatbotOutput) chatbotOutput.innerHTML = '<strong style="color: #f05fff;">Error:</strong> Please enter a test message.';
       return;
     }
 
-    chatbotOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
+    if (chatbotOutput) chatbotOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
     try {
       const response = await fetch(`${VERCEL_API_URL}/api/chatbot-builder`, {
         method: 'POST',
@@ -287,14 +291,14 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ greeting, tone, keywords: keywords.split(',').map(k => k.trim()), input })
       });
 
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
 
       const data = await response.json();
       if (!data.response) throw new Error('No response in response');
 
-      chatbotOutput.innerHTML = `<strong style="color: #f05fff;">Chatbot Response:</strong> ${data.response}`;
+      if (chatbotOutput) chatbotOutput.innerHTML = `<strong style="color: #f05fff;">Chatbot Response:</strong> ${data.response}`;
     } catch (error) {
-      chatbotOutput.innerHTML = `<strong style="color: #f05fff;">Error:</strong> ${error.message}`;
+      if (chatbotOutput) chatbotOutput.innerHTML = `<strong style="color: #f05fff;">Error:</strong> ${error.message}`;
       console.error('Chatbot error:', error);
     }
   }
