@@ -3,6 +3,8 @@ console.log('Script starting...');
 
 let renderer, scene, camera, controls, sun, planets = [], stars, foregroundParticles;
 const canvas = document.getElementById("bg");
+// Replace with your Vercel deployment URL after deploying
+const VERCEL_API_URL = 'YOUR_VERCEL_URL'; // e.g., https://your-project.vercel.app
 
 function initSolarSystem() {
   console.log('Solar init...');
@@ -87,7 +89,7 @@ function initSolarSystem() {
     const z = Math.random() * 50 - 100;
     particleVertices.push(x, y, z);
 
-    color.setHSL(Math.random(), 0.5, 0.7);
+    color.setHSL(Math.random(), 0.5, 0.7); // Colors matching #00f0ff, #f05fff scheme
     particleColors.push(color.r, color.g, color.b);
     particleSizes.push(Math.random() * 2 + 0.5);
   }
@@ -187,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     userInput.value = "";
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(`${VERCEL_API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message })
@@ -232,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     promptOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
     try {
-      const response = await fetch('/api/prompt-library', {
+      const response = await fetch(`${VERCEL_API_URL}/api/prompt-library`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ task, model })
@@ -243,7 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       if (!data.prompt) throw new Error('No prompt in response');
 
-      // Display the generated prompt in a formatted way
       promptOutput.innerHTML = `
         <strong style="color: #f05fff;">Generated Prompt:</strong>
         <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; margin-top: 10px; white-space: pre-wrap;">
@@ -280,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chatbotOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
     try {
-      const response = await fetch('/api/chatbot-builder', {
+      const response = await fetch(`${VERCEL_API_URL}/api/chatbot-builder`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ greeting, tone, keywords: keywords.split(',').map(k => k.trim()), input })
