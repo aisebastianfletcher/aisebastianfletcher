@@ -15,22 +15,13 @@
     <h1>Sebastian Fletcher</h1>
     <p>AI Engineer</p>
     <nav>
-      <a href="#about">About</a>
       <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
       <a href="#demos">Demos</a>
+      <a href="#portfolio">Portfolio</a>
       <a href="#contact">Contact</a>
-      <a href="#chatbot">AI Chat</a>
+      <a href="#chatbot">Sebastian's Assistant</a>
     </nav>
   </header>
-
-  <section id="about">
-    <h2>About Me</h2>
-    <div class="card">
-      <p>I am a self-taught prompt engineer aspiring to become an AI scientist. My focus lies in prompt design, model alignment, and optimization, with a strong interest in interpretability and safe deployment of AI systems. Through independent study and project work, I have developed skills in structured prompting, workflow automation, Python experimentation, and performance analysis of large language models. Curious and research-driven, I aim to bridge practical application with scientific exploration while contributing to impactful AI projects.</p>
-    </div>
-  </section>
 
   <section id="skills">
     <h2>Skills</h2>
@@ -45,64 +36,46 @@
     </div>
   </section>
 
-  <section id="experience">
-    <h2>Work Experience</h2>
-    <div class="card">
-      <h3>AI Engineer – BD PROTOTYPES</h3>
-      <p>Sep 2024 – Present</p>
-      <ul>
-        <li>Led end-to-end AI adoption strategy: Reduces work load by 50%+</li>
-        <li>AI-driven knowledge management systems: Prompt libraries and work flows so non-technical staff to leverage AI tools effectively</li>
-        <li>Designed and deployed AI-powered dashboards: extract KPIs and trend insights from company data, giving management real-time, actionable decision-making support and laying the foundation for broader AI integration.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>AI Engineer – Online Freelance (Fiverr/Upwork)</h3>
-      <p>Jul 2020 – Aug 2024</p>
-      <ul>
-        <li>Delivered customized AI prompt solutions for international clients across multiple industries which improved content generation quality, workflow automation and customer engagement.</li>
-        <li>Collaborated directly with non technical clients to understand business needs and translate them into effective AI use cases including marketing copy, chatbots and data analysis</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="education">
-    <h2>Education</h2>
-    <div class="card">
-      <ul>
-        <li>IBM AI Engineering 2025</li>
-        <li>Deeplearning.AI courses completed</li>
-        <li>ChatGPT prompt engineering developers.</li>
-        <li>Building systems with ChatGPT API.</li>
-        <li>LLM prompting with gemini.</li>
-        <li>Scientific Baccalaureate - Spain | IES IBARS 2012-2014</li>
-      </ul>
-    </div>
-  </section>
-
   <section id="demos">
-    <h2>Demos</h2>
+    <h2>Bot Demos</h2>
     <div class="demos-grid">
       <div class="card">
-        <h3>WhatsApp Bot</h3>
-        <p>AI-powered WhatsApp bot using n8n workflows for niche trend analysis, integrating TikTok API, Google Search, and more—reduces research time by 50%+.</p>
-        <a href="https://placeholder-link-to-n8n-demo.com" target="_blank" class="btn">View Demo</a>
-      </div>
-      <div class="card">
-        <h3>AI Dashboard Workflow</h3>
-        <p>Real-time KPI extraction using n8n and AI integration.</p>
-        <a href="https://placeholder-link-to-repo.com" target="_blank" class="btn">View Demo</a>
-      </div>
-      <div class="card">
         <h3>Prompt Library Automator</h3>
-        <p>Workflow for non-technical AI access via n8n.</p>
-        <a href="https://placeholder-link-to-repo.com" target="_blank" class="btn">View Demo</a>
+        <p>Generate optimized prompt templates for AI tasks.</p>
+        <div class="demo-container">
+          <input type="text" id="prompt-task" placeholder="Enter task (e.g., Write a blog post)">
+          <select id="prompt-model">
+            <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+            <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+          </select>
+          <button id="generate-prompt" class="btn">Generate Prompt</button>
+          <div id="prompt-output" class="demo-output"></div>
+        </div>
       </div>
       <div class="card">
         <h3>Freelance Chatbot Builder</h3>
-        <p>Custom n8n flows for client chatbots.</p>
-        <a href="https://placeholder-link-to-repo.com" target="_blank" class="btn">View Demo</a>
+        <p>Build a custom chatbot with configurable settings.</p>
+        <div class="demo-container">
+          <input type="text" id="chatbot-greeting" placeholder="Enter greeting (e.g., Hi there!)">
+          <select id="chatbot-tone">
+            <option value="friendly">Friendly</option>
+            <option value="professional">Professional</option>
+          </select>
+          <input type="text" id="chatbot-keywords" placeholder="Keywords (e.g., help, info)">
+          <input type="text" id="chatbot-input" placeholder="Test the chatbot...">
+          <button id="test-chatbot" class="btn">Test Chatbot</button>
+          <div id="chatbot-output" class="demo-output"></div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <h2>Portfolio</h2>
+    <div class="card">
+      <h3>Resume</h3>
+      <p>Download my detailed resume in PDF format.</p>
+      <a href="./resume.pdf" download class="btn">Download PDF</a>
     </div>
   </section>
 
@@ -120,7 +93,7 @@
   </section>
 
   <section id="chatbot">
-    <h2>Oracle Bot</h2>
+    <h2>Sebastian's Assistant</h2>
     <div id="chat-window">
       <div id="chat-log"></div>
       <input type="text" id="user-input" placeholder="Ask any question..." />
