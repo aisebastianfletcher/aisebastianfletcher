@@ -1,7 +1,7 @@
-// script.js - Enhanced Bot Debug (Logs Response/Status)
+// script.js
 console.log('Script starting...');
 
-let renderer, scene, camera, controls, sun, planets = [], stars;
+let renderer, scene, camera, controls, sun, planets = [], stars, foregroundParticles;
 const canvas = document.getElementById("bg");
 
 function initSolarSystem() {
@@ -73,7 +73,41 @@ function initSolarSystem() {
       planet.add(ring);
     }
   });
-  console.log('Solar system ready - Planets:', planets.length);
+
+  // Add subtle foreground 3D elements: floating particles
+  const particleGeometry = new THREE.BufferGeometry();
+  const particleVertices = [];
+  const particleColors = [];
+  const particleSizes = [];
+  const color = new THREE.Color();
+
+  for (let i = 0; i < 500; i++) {
+    const x = (Math.random() - 0.5) * window.innerWidth / 2;
+    const y = (Math.random() - 0.5) * window.innerHeight / 2;
+    const z = Math.random() * 50 - 100;
+    particleVertices.push(x, y, z);
+
+    color.setHSL(Math.random(), 0.5, 0.7);
+    particleColors.push(color.r, color.g, color.b);
+    particleSizes.push(Math.random() * 2 + 0.5);
+  }
+
+  particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particleVertices, 3));
+  particleGeometry.setAttribute('color', new THREE.Float32BufferAttribute(particleColors, 3));
+  particleGeometry.setAttribute('size', new THREE.Float32BufferAttribute(particleSizes, 1));
+
+  const particleMaterial = new THREE.PointsMaterial({
+    vertexColors: true,
+    sizeAttenuation: true,
+    transparent: true,
+    opacity: 0.3,
+    blending: THREE.AdditiveBlending
+  });
+
+  foregroundParticles = new THREE.Points(particleGeometry, particleMaterial);
+  scene.add(foregroundParticles);
+
+  console.log('Solar system ready - Planets:', planets.length, 'Foreground particles added');
 }
 
 function animate() {
@@ -100,6 +134,16 @@ function animate() {
 
   if (stars) stars.rotation.y += 0.0002;
 
+  if (foregroundParticles) {
+    foregroundParticles.rotation.y += 0.0005;
+    const positions = foregroundParticles.geometry.attributes.position.array;
+    for (let i = 0; i < positions.length; i += 3) {
+      positions[i + 1] += Math.sin(Date.now() * 0.001 + i) * 0.01;
+      if (positions[i + 1] > window.innerHeight / 2) positions[i + 1] = -window.innerHeight / 2;
+    }
+    foregroundParticles.geometry.attributes.position.needsUpdate = true;
+  }
+
   renderer.render(scene, camera);
 }
 
@@ -107,6 +151,155 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM ready');
   initSolarSystem();
   animate();
+
+  // Sebastian's Assistant
+  const chatLog = document.getElementById("chat-log");
+  const userInput = document.getElementById("user-input");
+  const sendBtn = document.getElementById("send-btn");
+
+  function typeText(element, text, delay = 30) {
+    element.innerHTML = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        element.innerHTML += text[i++];
+        chatLog.scrollTop = chatLog.scrollHeight;
+      } else {
+        clearInterval(interval);
+      }
+    }, delay);
+  }
+
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    const userDiv = document.createElement("div");
+    userDiv.innerHTML = `<strong style="color: #00f0ff;">You:</strong> ${message}`;
+    chatLog.appendChild(userDiv);
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    const aiDiv = document.createElement("div");
+    aiDiv.innerHTML = '<strong style="color: #f05fff;">Sebastian\'s Assistant:</strong> Thinking...';
+    chatLog.appendChild(aiDiv);
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    userInput.value = "";
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+      if (!data.reply) throw new Error('No reply in response');
+
+      aiDiv.innerHTML = '';
+      typeText(aiDiv, `<strong style="color: #f05fff;">Sebastian's Assistant:</strong> ${data.reply}`);
+    } catch (error) {
+      aiDiv.innerHTML = '';
+      typeText(aiDiv, `<strong style="color: #f05fff;">Sebastian's Assistant:</strong> Error: ${error.message}. Check console for details.`);
+      console.error('Chat error:', error);
+    }
+  }
+
+  if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+  if (userInput) userInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+
+  if (chatLog) {
+    const welcome = document.createElement('div');
+    welcome.innerHTML = '<strong style="color: #f05fff;">Sebastian\'s Assistant:</strong> Hi! Ask about my AI work or anything else.';
+    chatLog.appendChild(welcome);
+  }
+
+  // Prompt Library Automator
+  const promptTask = document.getElementById("prompt-task");
+  const promptModel = document.getElementById("prompt-model");
+  const generatePromptBtn = document.getElementById("generate-prompt");
+  const promptOutput = document.getElementById("prompt-output");
+
+  async function generatePrompt() {
+    const task = promptTask.value.trim();
+    const model = promptModel.value;
+    if (!task) {
+      promptOutput.innerHTML = '<strong style="color: #f05fff;">Error:</strong> Please enter a task.';
+      return;
+    }
+
+    promptOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
+    try {
+      const response = await fetch('/api/prompt-library', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task, model })
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+      if (!data.prompt) throw new Error('No prompt in response');
+
+      // Display the generated prompt in a formatted way
+      promptOutput.innerHTML = `
+        <strong style="color: #f05fff;">Generated Prompt:</strong>
+        <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; margin-top: 10px; white-space: pre-wrap;">
+          ${data.prompt}
+        </div>
+      `;
+    } catch (error) {
+      promptOutput.innerHTML = `<strong style="color: #f05fff;">Error:</strong> ${error.message}`;
+      console.error('Prompt error:', error);
+    }
+  }
+
+  if (generatePromptBtn) generatePromptBtn.addEventListener('click', generatePrompt);
+  if (promptTask) promptTask.addEventListener('keypress', e => { if (e.key === 'Enter') generatePrompt(); });
+
+  // Freelance Chatbot Builder
+  const chatbotGreeting = document.getElementById("chatbot-greeting");
+  const chatbotTone = document.getElementById("chatbot-tone");
+  const chatbotKeywords = document.getElementById("chatbot-keywords");
+  const chatbotInput = document.getElementById("chatbot-input");
+  const testChatbotBtn = document.getElementById("test-chatbot");
+  const chatbotOutput = document.getElementById("chatbot-output");
+
+  async function testChatbot() {
+    const greeting = chatbotGreeting.value.trim();
+    const tone = chatbotTone.value;
+    const keywords = chatbotKeywords.value.trim();
+    const input = chatbotInput.value.trim();
+
+    if (!input) {
+      chatbotOutput.innerHTML = '<strong style="color: #f05fff;">Error:</strong> Please enter a test message.';
+      return;
+    }
+
+    chatbotOutput.innerHTML = '<strong style="color: #f05fff;">Generating...</strong>';
+    try {
+      const response = await fetch('/api/chatbot-builder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ greeting, tone, keywords: keywords.split(',').map(k => k.trim()), input })
+      });
+
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      const data = await response.json();
+      if (!data.response) throw new Error('No response in response');
+
+      chatbotOutput.innerHTML = `<strong style="color: #f05fff;">Chatbot Response:</strong> ${data.response}`;
+    } catch (error) {
+      chatbotOutput.innerHTML = `<strong style="color: #f05fff;">Error:</strong> ${error.message}`;
+      console.error('Chatbot error:', error);
+    }
+  }
+
+  if (testChatbotBtn) testChatbotBtn.addEventListener('click', testChatbot);
+  if (chatbotInput) chatbotInput.addEventListener('keypress', e => { if (e.key === 'Enter') testChatbot(); });
 });
 
 window.addEventListener("resize", () => {
@@ -116,80 +309,3 @@ window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
 });
-
-// --- Oracle Bot with Enhanced Logging ---
-const chatLog = document.getElementById("chat-log");
-const userInput = document.getElementById("user-input");
-const sendBtn = document.getElementById("send-btn");
-const VERCEL_API_URL = 'https://your-vercel-app.vercel.app/api/chat';  // REPLACE WITH YOUR VERCEL URL
-
-function typeText(element, text, delay = 30) {
-  element.innerHTML = '';
-  let i = 0;
-  const interval = setInterval(() => {
-    if (i < text.length) {
-      element.innerHTML += text[i++];
-      chatLog.scrollTop = chatLog.scrollHeight;
-    } else {
-      clearInterval(interval);
-    }
-  }, delay);
-}
-
-async function sendMessage() {
-  const message = userInput.value.trim();
-  if (!message) return;
-
-  const userDiv = document.createElement("div");
-  userDiv.innerHTML = `<strong style="color: #00f0ff;">You:</strong> ${message}`;
-  chatLog.appendChild(userDiv);
-  chatLog.scrollTop = chatLog.scrollHeight;
-
-  const aiDiv = document.createElement("div");
-  aiDiv.innerHTML = '<strong style="color: #f05fff;">Oracle Bot:</strong> Thinking...';
-  chatLog.appendChild(aiDiv);
-  chatLog.scrollTop = chatLog.scrollHeight;
-
-  userInput.value = "";
-
-  console.log('Sending to Vercel:', VERCEL_API_URL, 'Message:', message);  // Debug
-
-  try {
-    const response = await fetch(VERCEL_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message })
-    });
-
-    console.log('Response status:', response.status, 'OK:', response.ok);  // Debug
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Vercel error body:', errorText);
-      throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log('Vercel response data:', data);  // Debug
-
-    if (!data.reply) throw new Error('No "reply" in response');
-
-    aiDiv.innerHTML = '';
-    typeText(aiDiv, `<strong style="color: #f05fff;">Oracle Bot:</strong> ${data.reply}`);
-  } catch (error) {
-    console.error('Full bot error:', error);
-    aiDiv.innerHTML = '';
-    typeText(aiDiv, `<strong style="color: #f05fff;">Oracle Bot:</strong> Error: ${error.message}. Vercel URL correct? Check console (F12) for details.`);
-  }
-}
-
-if (sendBtn) sendBtn.addEventListener('click', sendMessage);
-if (userInput) userInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
-
-if (chatLog) {
-  const welcome = document.createElement('div');
-  welcome.innerHTML = '<strong style="color: #f05fff;">Oracle Bot:</strong> Hi! Ask about Sebastian\'s AI work, n8n bots, or anything.';
-  chatLog.appendChild(welcome);
-}
-
-console.log('Bot listeners added');
