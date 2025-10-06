@@ -147,6 +147,32 @@ li::before {
   margin: 0 auto;
 }
 
+.demo-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.demo-container input,
+.demo-container select {
+  padding: 10px;
+  border: 1px solid rgba(0,240,255,0.3);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  color: #e0e0e0;
+  font-family: inherit;
+}
+
+.demo-output {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,240,255,0.3);
+  border-radius: 5px;
+  min-height: 50px;
+  text-align: left;
+}
+
 .btn {
   display: inline-block;
   background: linear-gradient(135deg, #00f0ff, #f05fff);
@@ -157,6 +183,8 @@ li::before {
   font-weight: 600;
   transition: all 0.3s ease;
   margin-top: 10px;
+  cursor: pointer;
+  border: none;
 }
 
 .btn:hover {
