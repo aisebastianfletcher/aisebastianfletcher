@@ -6,20 +6,20 @@ export default async function handler(req, res) {
   }
 
   const { task, model } = req.body;
-  if (!task || !model) {
-    return res.status(400).json({ error: 'Task and model are required' });
+  if (!task) {
+    return res.status(400).json({ error: 'Task is required' });
   }
 
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const selectedModel = genAI.getGenerativeModel({ model });
-    const promptRequest = `Generate an optimized prompt template for the task: "${task}". The prompt should be clear, concise, and tailored for ${model}. Include placeholders for user input where applicable.`;
-    const result = await selectedModel.generateContent(promptRequest);
-    const prompt = result.response.text();
+    const selectedModel = genAI.getGenerativeModel({ model: model || "gemini-1.5-pro" });
+    const prompt = `Generate an optimized prompt template for the task: "${task}". Ensure it includes clear instructions and placeholders for variables.`;
+    const result = await selectedModel.generateContent(prompt);
+    const generatedPrompt = result.response.text();
 
-    res.status(200).json({ prompt });
+    return res.status(200).json({ prompt: generatedPrompt });
   } catch (error) {
     console.error('Gemini API error:', error);
-    res.status(500).json({ error: 'Failed to generate prompt' });
+    return res.status(500).json({ error: 'Failed to generate prompt' });
   }
 }
