@@ -14,19 +14,18 @@ export default async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const prompt = `
-      You are a chatbot with the following configuration:
-      - Greeting: ${greeting || 'Hello! How can I assist you?'}
+      You are a chatbot with the following settings:
+      - Greeting: "${greeting || 'Hello! How can I assist you?'}"
       - Tone: ${tone || 'friendly'}
-      - Keywords to prioritize: ${keywords ? keywords.join(', ') : 'none'}
-      Respond to the user input: "${input}"
-      Ensure the response matches the specified tone and incorporates the greeting or keywords if relevant.
+      - Keywords to focus on: ${keywords && keywords.length ? keywords.join(', ') : 'none'}
+      Respond to the user input: "${input}" accordingly.
     `;
     const result = await model.generateContent(prompt);
     const response = result.response.text();
 
-    res.status(200).json({ response });
+    return res.status(200).json({ response });
   } catch (error) {
     console.error('Gemini API error:', error);
-    res.status(500).json({ error: 'Failed to generate response' });
+    return res.status(500).json({ error: 'Failed to generate chatbot response' });
   }
 }
